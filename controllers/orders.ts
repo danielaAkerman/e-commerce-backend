@@ -1,8 +1,10 @@
 import { Order } from "models/order"
 import { createPreference } from "lib/mercadopago"
+import { productsIndex } from "lib/algolia"
 
 type CreateOrderRes = {
-    url: string
+    url: string,
+    orderId: string
 }
 
 // mock
@@ -21,7 +23,13 @@ export async function createOrder(
 ): Promise<CreateOrderRes> {
 
 
-    const product = products[productId] // Es como si lo fuera a buscar a DB
+    // const product = products[productId] // Es como si lo fuera a buscar a DB
+
+
+    const results = await productsIndex.findObject(hit => hit.objectID == productId)
+    const product = await results.object
+
+    console.log("prrrrrroducto", product)
 
     if (!product) {
         throw "El producto no existe"
@@ -35,8 +43,6 @@ export async function createOrder(
         createdAt: new Date()
     })
 
-    // res.send(order.data)
-
     const pref = await createPreference({
         "external_reference": order.id,
         "notification_url": "https://payments-vert-iota.vercel.app/api/webhooks/mercadopago",
@@ -46,23 +52,21 @@ export async function createOrder(
 
         "items": [
             {
-                "title": product.title,
+                "title": product["Name"],
                 "description": "Dummy description",
                 "picture_url": "http://www.myapp.com/myimage.jpg",
                 "category_id": "car_electronics",
                 "quantity": 1,
                 "currency_id": "ARS",
-                "unit_price": product.price
+                "unit_price": product["Unit cost"]
             }
         ],
 
     })
 
-    return ({ url: pref.init_point })
+    return ({ url: pref.init_point, orderId: order.id })
     
 }
-
-
 
 
 

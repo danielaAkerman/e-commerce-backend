@@ -29,4 +29,24 @@ export class Order {
         newOrder.data.createdAt = new Date()
         return newOrder
     }
+
+    static async getMyOrders(userId) {
+
+        const results = []
+        const myOrdersSnap =
+            (await collection.where("userId", "==", userId)
+                .get())
+                .forEach((i) => {
+                    results.push({
+                        orderId: i["_ref"]["_path"]["segments"][1],
+                        status: i["_fieldsProto"]["status"]["stringValue"]
+                    })
+                })
+        return results
+    }
+
+    static async findOrder(orderId) {
+        const order = await collection.doc(orderId).get()
+        return order.data()
+    }
 }

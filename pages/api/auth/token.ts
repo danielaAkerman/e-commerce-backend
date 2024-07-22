@@ -22,4 +22,4 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 }
 
 // POST /auth/token
-// Recibe un email y un código y valida que sean los correctos. En el caso de que sean correctos devuelve un token e invalida el código.
+// Recibe un email y un código y valida que sean los correctos. En el caso de que sean correctos devuelve un token e invalida el código. 

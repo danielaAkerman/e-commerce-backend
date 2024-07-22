@@ -1,17 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import parseToken from "parse-bearer-token"
-import { decode } from "lib/jwt"
-import { User } from "models/user"
 import { authMiddleware } from "lib/middlewares"
 import { getUserById } from "controllers/users"
+import method from "micro-method-router"
 
-// async function handler(req: NextApiRequest, res: NextApiResponse, token) {
-//     const user = getUserById(token.userId)
-//     res.send(user)
-// }
+async function patchMeAddress(req: NextApiRequest, res: NextApiResponse, token) {
+    const user = await getUserById(token.userId)
+    const newAddress = req.body.address
+    user.data = { ...user.data, address: newAddress }
+    user.push()
 
-// export default authMiddleware(handler)
+    res.send(user.data)
+}
 
+const handler = method({
+    patch: patchMeAddress
+})
+
+export default authMiddleware(handler)
 
 
 // PATCH /me/address

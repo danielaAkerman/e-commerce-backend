@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import { getMerchantOrder } from "lib/mercadopago"
 import { Order } from "models/order"
+import { User } from "models/user"
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
     const { id, topic } = req.query
@@ -11,9 +12,16 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
             const orderId = order.external_reference
             const myOrder = new Order(orderId)
             await myOrder.pull()
+
             myOrder.data.status = "closed"
             myOrder.data.externalOrder = order // BACK UP
             await myOrder.push()
+
+            // const comprador = myOrder.data.userId
+
+            
+            // order.sendEmail(comprador) obtener email desde el userId
+
             // Busco en DB esta orden, y los datos del comprador, para enviarle un mail
             // Cambiar estado en la orden interna (esto ya esta pago)
             // sendEmail("Tu pago fue confirmado")

@@ -23,4 +23,10 @@ export class User {
         newUser.data = data
         return newUser
     }
+
+    static async sendEmail(comprador){
+        const user = await collection.doc(comprador).get()
+        const userEmail= await user.data().email
+        console.log("EL MAIL DEL COMPRADOR DESDE MODELS USERS ES ", userEmail)
+    }
 }

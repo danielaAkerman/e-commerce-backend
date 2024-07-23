@@ -49,4 +49,5 @@ export class Order {
         const order = await collection.doc(orderId).get()
         return order.data()
     }
+
 }

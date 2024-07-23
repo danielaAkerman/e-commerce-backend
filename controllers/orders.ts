@@ -8,12 +8,12 @@ type CreateOrderRes = {
 }
 
 // mock
-const products = {
-    1234: {
-        title: "Remera Nigeria",
-        price: 9999
-    }
-}
+// const products = {
+//     1234: {
+//         title: "Remera Nigeria",
+//         price: 9999
+//     }
+// }
 // 
 
 export async function createOrder(
@@ -43,7 +43,7 @@ export async function createOrder(
 
     const pref = await createPreference({
         "external_reference": order.id,
-        "notification_url": "https://payments-vert-iota.vercel.app/api/webhooks/mercadopago",
+        "notification_url": "https://e-commerce-backend-kohl.vercel.app/api/webhooks/mercadopago",
         "back_urls": {
             "success": "https://www.google.com.ar"
         },
@@ -62,8 +62,11 @@ export async function createOrder(
 
     })
 
+    order.data.url = pref.init_point
+    order.push()
+
     return ({ url: pref.init_point, orderId: order.id })
-    
+
 }
 
 

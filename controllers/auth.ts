@@ -11,7 +11,6 @@ export async function findOrCreateAuth(email: string): Promise<Auth> {
     const cleanEmail = email.trim().toLowerCase()
     const auth = await Auth.findByEmail(cleanEmail)
     if (auth) {
-        console.log("auth encontrado")
         return auth
     } else {
         const newUser = await User.createNewUser({

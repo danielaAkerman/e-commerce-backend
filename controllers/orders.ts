@@ -29,8 +29,6 @@ export async function createOrder(
     const results = await productsIndex.findObject(hit => hit.objectID == productId)
     const product = await results.object
 
-    console.log("prrrrrroducto", product)
-
     if (!product) {
         throw "El producto no existe"
     }
@@ -53,9 +51,9 @@ export async function createOrder(
         "items": [
             {
                 "title": product["Name"],
-                "description": "Dummy description",
-                "picture_url": "http://www.myapp.com/myimage.jpg",
-                "category_id": "car_electronics",
+                "description": product["Description"],
+                "picture_url": product["Images"][0]["url"],
+                "category_id": product["Category"],
                 "quantity": 1,
                 "currency_id": "ARS",
                 "unit_price": product["Unit cost"]

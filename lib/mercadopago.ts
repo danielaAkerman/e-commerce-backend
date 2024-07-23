@@ -12,6 +12,4 @@ export async function getMerchantOrder(id) {
 export async function createPreference(data = {}) {
     const res = await mercadopago.preferences.create(data)
     return (res.body)
-
 }
-

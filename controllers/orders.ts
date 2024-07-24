@@ -43,7 +43,7 @@ export async function createOrder(
 
     const pref = await createPreference({
         "external_reference": order.id,
-        "notification_url": "https://e-commerce-backend-kohl.vercel.app/api/webhooks/mercadopago",
+        "notification_url": "https://e-commerce-backend-kohl.vercel.app/api/ipn/mercadopago",
         "back_urls": {
             "success": "https://www.google.com.ar"
         },

@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import { getMerchantOrder } from "lib/mercadopago"
 import { Order } from "models/order"
-import { User } from "models/user"
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
     const { id, topic } = req.query
@@ -18,8 +17,8 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
             await myOrder.push()
 
             // const mailEnviadoComprador = await User.sendEmailComprador(myOrder.data.userId)
+            res.send("Se actualizó la orden con éxito")
         }
     }
-
     res.send("ok")
 }

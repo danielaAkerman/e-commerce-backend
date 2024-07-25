@@ -1,10 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import { sendCode } from "controllers/auth"
 import method from "micro-method-router"
 import { authMiddleware } from "lib/middlewares"
 import { createOrder } from "controllers/orders"
-import { Order } from "models/order"
-import * as yup from "yup"
 
 // let querySchema = yup.object().shape({
 //     productId: yup.string().required(),

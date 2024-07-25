@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import { authMiddleware } from "lib/middlewares"
-import { getUserById } from "controllers/users"
 import method from "micro-method-router"
 import { Order } from "models/order"
 

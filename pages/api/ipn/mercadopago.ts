@@ -17,7 +17,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
             myOrder.data.externalOrder = order // BACK UP
             await myOrder.push()
 
-            const mailEnviadoComprador = User.sendEmailComprador(myOrder.data.userId)
+            const mailEnviadoComprador = await User.sendEmailComprador(myOrder.data.userId)
             res.send(mailEnviadoComprador)
         }
     }

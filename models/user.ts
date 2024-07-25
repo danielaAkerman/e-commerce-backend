@@ -1,4 +1,5 @@
 import { firestore } from "../lib/firestore";
+// import sgMail from "@sendgrid/mail"
 
 const collection = firestore.collection("users")
 
@@ -24,14 +25,36 @@ export class User {
         return newUser
     }
 
-    static async sendEmailComprador(id) {
-        const user = await collection.doc(id).get()
-        const userEmail = await user.data().email
-        console.log("EL MAIL DEL COMPRADOR DESDE MODELS USERS ES ", userEmail)
-        return ({message: "mail enviado al comprador", email: userEmail})
-    }
+    // static async sendEmailComprador(id) {
+    //     const user = await collection.doc(id).get()
+    //     const userEmail = await user.data().email
 
-    static async sendEmailVendedor() {
-        return true
-    }
+
+    //     // enviar mail
+
+    //     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    //     const msg = {
+    //         to: userEmail,
+    //         from: "daniela.akerman@outlook.com",
+    //         subject: `Pago aprobado`,
+    //         text: `Hola!`,
+    //         html: `Se registró tu pago, gracias por tu compra!`,
+    //     };
+    //     sgMail
+    //         .send(msg)
+    //         .then(() => {
+    //             console.log("email enviado a " + userEmail)
+    //             return ({ message: "mail enviado al comprador", email: userEmail })
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //             return { message: "Error" };
+    //         });
+
+    //     // fin enviar mail        
+    // }
+
+    // static async sendEmailVendedor() {
+    //     return true
+    // }
 }
